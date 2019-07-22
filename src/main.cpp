@@ -4,9 +4,8 @@
 
 int main(int argc, char* argv[])
 {
-//	const char* host = argc > 1 ? argv[1] : "";
-//	int port = argc > 2 ? atoi(argv[2]) : 0;
-//	if (port <= 0) port = 7496;
+	std::string addr = argc > 1 ? argv[1] : "";
+	int port = argc > 2 ? atoi(argv[2]) : 0;
 //	const char* connectOptions = argc > 3 ? argv[3] : "";
 	
 //	int clientId = 0;
@@ -20,7 +19,7 @@ int main(int argc, char* argv[])
 		
 		//if (connectOptions) client.setConnectOptions(connectOptions);
 		
-		client.connect(host, port, clientId);
+		client.connect(addr, port);
 		
 		//while (client.isConnected()) client.processMessages();
 		
