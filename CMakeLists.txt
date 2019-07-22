@@ -25,7 +25,7 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 #definitions
 add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
 
-add_executable(ib-client "source/main.cpp")
+add_executable(ib-client "src/main.cpp" "src/client.h" "src/client.cpp")
 
 # Properties -> Linker -> Input -> Additional Dependencies
 #target_link_libraries(ib-client ${OpenCV_LIBS} ${DGM_LIBRARIES})
