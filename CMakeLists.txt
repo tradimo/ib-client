@@ -2,6 +2,13 @@ cmake_minimum_required (VERSION 3.1)
 
 project (ib-client)
 
+file(GLOB SOURCES "src/*.cpp")
+file(GLOB HEADERS "src/*.h")
+
+source_group("" FILES ${SOURCES} ${HEADERS}) 
+source_group("Source Files" FILES	"src/main.cpp") 
+source_group("Source Files\\client" FILES "src/client.h" "src/client.cpp")
+
 # OpenCV and DGM packages
 #find_package(OpenCV 4.0 REQUIRED core features2d highgui imgproc imgcodecs ml PATHS "$ENV{OPENCVDIR}/build")
 #find_package(DGM 1.7 REQUIRED PATHS "$ENV{DGMDIR}/build/install")
@@ -21,12 +28,12 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(IB_API_INCLUDE_DIR "" CACHE PATH "Path to the IP API")
 
 # Properties -> C/C++ -> General -> Additional Include Directories
-include_directories(${IB_API_INCLUDE_DIR})
+include_directories(${IB_API_INCLUDE_DIR}/client)
 
 #definitions
 add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
 
-add_executable(ib-client "src/main.cpp" "src/client.h" "src/client.cpp")
+add_executable(ib-client ${SOURCES} ${HEADERS})
 
 # Properties -> Linker -> Input -> Additional Dependencies
-#target_link_libraries(ib-client ${OpenCV_LIBS} ${DGM_LIBRARIES})
+target_link_libraries(ib-client ${IB_API_INCLUDE_DIR}/lib/TwsSocketClient.lib)
