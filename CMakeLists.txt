@@ -8,6 +8,7 @@ file(GLOB HEADERS "src/*.h")
 source_group("" FILES ${SOURCES} ${HEADERS}) 
 source_group("Source Files" FILES	"src/main.cpp") 
 source_group("Source Files\\client" FILES "src/client.h" "src/client.cpp")
+source_group("Source Files\\contracts" FILES "src/contracts.h")
 
 # OpenCV and DGM packages
 #find_package(OpenCV 4.0 REQUIRED core features2d highgui imgproc imgcodecs ml PATHS "$ENV{OPENCVDIR}/build")
