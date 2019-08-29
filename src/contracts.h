@@ -51,8 +51,19 @@ public:
 		res.secType = "FUT";
 		res.exchange = "NYMEX";
 		res.currency = "USD";
-		res.lastTradeDateOrContractMonth = "202009";
-		//res.includeExpired = true;
+		res.lastTradeDateOrContractMonth = "201912";
+		res.includeExpired = true;
+		return res;
+	}
+	
+	static Contract gold(void) {
+		Contract res;
+		res.symbol = "GC";
+		res.secType = "FUT";
+		res.exchange = "NYMEX";
+		res.currency = "USD";
+		res.lastTradeDateOrContractMonth = "201909";
+		res.includeExpired = true;
 		return res;
 	}
 

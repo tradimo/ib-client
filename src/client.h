@@ -28,7 +28,7 @@ public:
 	// From EWrapper
 	virtual void tickPrice(TickerId tickerId, TickType field, double price, const TickAttrib& attrib) override
 	{
-		printf("Tick Price. Ticker Id: %ld, Field: %d, Price: %g, CanAutoExecute: %d, PastLimit: %d, PreOpen: %d\n", tickerId, static_cast<int>(field), price, attribs.canAutoExecute, attribs.pastLimit, attribs.preOpen);
+		printf("Tick Price. Ticker Id: %ld, Field: %d, Price: %g, CanAutoExecute: %d, PastLimit: %d, PreOpen: %d\n", tickerId, static_cast<int>(field), price, attrib.canAutoExecute, attrib.pastLimit, attrib.preOpen);
 	}
 	virtual void tickSize(TickerId tickerId, TickType field, int size) override
 	{
@@ -36,7 +36,10 @@ public:
 	}
 	virtual void tickOptionComputation(TickerId tickerId, TickType tickType, double impliedVol, double delta, double optPrice, double pvDividend, double gamma, double vega, double theta, double undPrice) override { printf("callback 03\n"); }
 	virtual void tickGeneric(TickerId tickerId, TickType tickType, double value) override { printf("callback 04\n"); }
-	virtual void tickString(TickerId tickerId, TickType tickType, const std::string& value) override { printf("callback 05\n"); }
+	virtual void tickString(TickerId tickerId, TickType tickType, const std::string& value) override
+	{
+		printf("Tick String. Ticker Id: %ld, Type: %d, Value: %s\n", tickerId, static_cast<int>(tickType), value.c_str());
+	}
 	virtual void tickEFP(TickerId tickerId, TickType tickType, double basisPoints, const std::string& formattedBasisPoints, double totalDividends, int holdDays, const std::string& futureLastTradeDate, double dividendImpact, double dividendsToLastTradeDate) override { printf("callback 06\n"); }
 	virtual void orderStatus(OrderId orderId, const std::string& status, double filled, double remaining, double avgFillPrice, int permId, int parentId, double lastFillPrice, int clientId, const std::string& whyHeld, double mktCapPrice) override { printf("callback 07\n"); }
 	virtual void openOrder(OrderId orderId, const Contract&, const Order&, const OrderState&) override { printf("callback 08\n"); }
@@ -109,7 +112,10 @@ public:
 	virtual void fundamentalData(TickerId reqId, const std::string& data) override { printf("callback 35\n"); }
 	virtual void deltaNeutralValidation(int reqId, const DeltaNeutralContract& deltaNeutralContract) override { printf("callback 36\n"); }
 	virtual void tickSnapshotEnd(int reqId) override { printf("callback 37\n"); }
-	virtual void marketDataType(TickerId reqId, int marketDataType) override { printf("callback 38\n"); }
+	virtual void marketDataType(TickerId reqId, int marketDataType) override
+	{
+		printf("MarketDataType. ReqId: %ld, Type: %d\n", reqId, marketDataType);
+	}
 	virtual void commissionReport(const CommissionReport& commissionReport) override { printf("callback 39\n"); }
 	virtual void position(const std::string& account, const Contract& contract, double position, double avgCost) override { printf("callback 40\n"); }
 	virtual void positionEnd() override { printf("callback 41\n"); }
@@ -136,7 +142,11 @@ public:
 	virtual void mktDepthExchanges(const std::vector<DepthMktDataDescription> &depthMktDataDescriptions) override { printf("callback 60\n"); }
 	virtual void tickNews(int tickerId, time_t timeStamp, const std::string& providerCode, const std::string& articleId, const std::string& headline, const std::string& extraData) override { printf("callback 61\n"); }
 	virtual void smartComponents(int reqId, const SmartComponentsMap& theMap) override { printf("callback 62\n"); }
-	virtual void tickReqParams(int tickerId, double minTick, const std::string& bboExchange, int snapshotPermissions) override { printf("callback 63\n"); }
+	virtual void tickReqParams(int tickerId, double minTick, const std::string& bboExchange, int snapshotPermissions) override
+	{
+		printf("tickerId: %d, minTick: %g, bboExchange: %s, snapshotPermissions: %u\n", tickerId, minTick, bboExchange.c_str(), snapshotPermissions);
+//		m_bboExchange = bboExchange;
+	}
 	virtual void newsProviders(const std::vector<NewsProvider> &newsProviders) override { printf("callback 64\n"); }
 	virtual void newsArticle(int requestId, int articleType, const std::string& articleText) override { printf("callback 65\n"); }
 	virtual void historicalNews(int requestId, const std::string& time, const std::string& providerCode, const std::string& articleId, const std::string& headline) override { printf("callback 66\n"); }
