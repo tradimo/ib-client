@@ -5,11 +5,9 @@ project (ib-client)
 file(GLOB SOURCES "src/*.cpp")
 file(GLOB HEADERS "src/*.h")
 
-
 source_group("" FILES ${SOURCES} ${HEADERS}) 
 source_group("Source Files" FILES	"src/main.cpp") 
 source_group("Source Files\\client" FILES "src/client.h" "src/client.cpp")
-source_group("Source Files\\contracts" FILES "src/contracts.h")
 
 # OpenCV and DGM packages
 #find_package(OpenCV 4.0 REQUIRED core features2d highgui imgproc imgcodecs ml PATHS "$ENV{OPENCVDIR}/build")
@@ -25,20 +23,22 @@ set(CMAKE_CXX_STANDARD 14)
 if(MSVC)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zi /wd5040") 
 set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS} /DEBUG /INCREMENTAL:NO /OPT:REF /OPT:ICF")
+set(IB_SHARED_LIB ${IB_API_INCLUDE_DIR}/lib/TwsSocketClient.lib)
 endif(MSVC)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin) 
 set(IB_API_INCLUDE_DIR "" CACHE PATH "Path to the IP API")
+set(IB_SHARED_LIB  TwsSocketClient)
 
 # Properties -> C/C++ -> General -> Additional Include Directories
-include_directories(${IB_API_INCLUDE_DIR} ${IB_API_INCLUDE_DIR}/client)
+include_directories(${IB_API_INCLUDE_DIR}/client)
 
 #definitions
 add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
 
-add_executable(ib-client ${SOURCES} ${HEADERS} )
+add_executable(ib-client ${SOURCES} ${HEADERS})
+
+# Properties -> Linker -> General -> Additional Library Directories
+link_directories(${IB_API_INCLUDE_DIR}/client)  
 
 # Properties -> Linker -> Input -> Additional Dependencies
-#target_link_libraries(ib-client ${IB_API_INCLUDE_DIR}/lib/TwsSocketClient.lib)
-file(GLOB MYLIB ${IB_API_INCLUDE_DIR}/client/*.cpp)
-add_library(TwsSocketClient STATIC ${MYLIB})
-target_link_libraries(ib-client TwsSocketClient)
+target_link_libraries(ib-client ${IB_SHARED_LIB})

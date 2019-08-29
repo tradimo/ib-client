@@ -4,6 +4,8 @@
 #include <ctime>
 #include <thread>
 #include <chrono>
+#include <iostream>
+#include <memory>
 
 // constructor
 CClient::CClient() 
@@ -81,7 +83,7 @@ void CClient::processMessages(void)
 		printf("--> delayedTickData:\n");
 		
 		m_pClientSocket->reqMarketDataType(4);	// send delayed-frozen (4) market data type
-		m_pClientSocket->reqMktData(501, CContracts::crudeOilCont(), "", false, false, TagValueListSPtr());
+		m_pClientSocket->reqMktData(501, CContracts::crudeOil(), "", false, false, TagValueListSPtr());
 		std::this_thread::sleep_for(std::chrono::seconds(10));
 		m_pClientSocket->cancelMktData(501);
 		
@@ -89,6 +91,7 @@ void CClient::processMessages(void)
 		break;
 
 	case state::idle: break;
+	case state::connect: break;
 	}
 
 	m_readerOSSignal.waitForSignal();

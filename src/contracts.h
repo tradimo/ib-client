@@ -51,8 +51,8 @@ public:
 		res.secType = "FUT";
 		res.exchange = "NYMEX";
 		res.currency = "USD";
-		res.lastTradeDateOrContractMonth = "201909";
-		res.includeExpired = true;
+		res.lastTradeDateOrContractMonth = "202009";
+		//res.includeExpired = true;
 		return res;
 	}
 

@@ -26,8 +26,14 @@ public:
 	
 
 	// From EWrapper
-	virtual void tickPrice(TickerId tickerId, TickType field, double price, const TickAttrib& attrib) override { printf("callback 01\n"); }
-	virtual void tickSize(TickerId tickerId, TickType field, int size) override { printf("callback 02\n"); }
+	virtual void tickPrice(TickerId tickerId, TickType field, double price, const TickAttrib& attrib) override
+	{
+		printf("Tick Price. Ticker Id: %ld, Field: %d, Price: %g, CanAutoExecute: %d, PastLimit: %d, PreOpen: %d\n", tickerId, static_cast<int>(field), price, attribs.canAutoExecute, attribs.pastLimit, attribs.preOpen);
+	}
+	virtual void tickSize(TickerId tickerId, TickType field, int size) override
+	{
+		printf("Tick Size. Ticker Id: %ld, Field: %d, Size: %d\n", tickerId, static_cast<int>(field), size);
+	}
 	virtual void tickOptionComputation(TickerId tickerId, TickType tickType, double impliedVol, double delta, double optPrice, double pvDividend, double gamma, double vega, double theta, double undPrice) override { printf("callback 03\n"); }
 	virtual void tickGeneric(TickerId tickerId, TickType tickType, double value) override { printf("callback 04\n"); }
 	virtual void tickString(TickerId tickerId, TickType tickType, const std::string& value) override { printf("callback 05\n"); }
@@ -93,7 +99,7 @@ public:
 		printf("HistoricalData. ReqId: %ld - Date: %s, Open: %g, High: %g, Low: %g, Close: %g, Volume: %lld, Count: %d, WAP: %g\n", reqId, bar.time.c_str(), bar.open, bar.high, bar.low, bar.close, bar.volume, bar.count, bar.wap);
 	}
 	virtual void historicalDataEnd(int reqId, const std::string& startDateStr, const std::string& endDateStr) override { 
-		printf("HistoricalDataEnd. ReqId: %ld - Start Date: %s, End Date: %s\n", reqId, startDateStr.c_str(), endDateStr.c_str());
+		printf("HistoricalDataEnd. ReqId: %d - Start Date: %s, End Date: %s\n", reqId, startDateStr.c_str(), endDateStr.c_str());
 	}
 	virtual void scannerParameters(const std::string& xml) override { printf("callback 30\n"); }
 	virtual void scannerData(int reqId, int rank, const ContractDetails& contractDetails, const std::string& distance, const std::string& benchmark, const std::string& projection, const std::string& legsStr) override { printf("callback 31\n"); }
